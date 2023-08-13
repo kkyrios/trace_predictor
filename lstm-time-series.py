@@ -14,7 +14,7 @@ func3 = "762835950e81a11cd04cedcb05275dc111c651625d575077fce49f82170e0986"  #
 func_name = func1
 lower_bound = 0
 upper_bound = 1000
-feature = 15
+feature = 10
 request_per_minutes = {}
 # 获取特定函数调用的跟踪数据
 trace = traces[func_name]
@@ -121,7 +121,6 @@ def train(epoch=800):
             print("Epoch: {}, Loss: {:.5f}".format(e + 1, loss.item()))  # (训练周期，损失值)
 
 
-# 前70%使用原模型
 train()
 net = net.eval()  # 转换成测试模式
 pred_X = data_X  # 预测前70%

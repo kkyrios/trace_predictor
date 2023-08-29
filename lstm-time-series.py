@@ -2,7 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import pickle
+import random
+import torch
 
+def setup_seed(seed):
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+# 设置随机数种子
+
+
+setup_seed(20)
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 # 加载traces
 with open("traces.pkl", "rb") as f:
@@ -63,8 +75,6 @@ train_X = data_X[:train_size]
 train_Y = data_Y[:train_size]
 test_X = data_X[train_size:]
 test_Y = data_Y[train_size:]
-
-import torch
 
 # 转换为pytorch张量（自动计算、序列维度、特征维度/目标维度）
 train_X = train_X.reshape(-1, 1, feature)
@@ -142,4 +152,4 @@ plt.title(f"{func_name[:5]}", fontsize=12)
 plt.xlabel("Time (minutes)")  # 设置 x 轴标签
 plt.ylabel("Requests")  # 设置 y 轴标签
 plt.legend(loc="best")
-plt.show()
+plt.savefig("pic.jpg")

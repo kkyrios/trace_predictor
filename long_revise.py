@@ -29,9 +29,9 @@ with open("traces.pkl", "rb") as f:
 func1 = "cc5bb2108cc7daf53f9728ad21f661a8ef9c8b36284bacfcb712e2be87eef842"  # 0-1000
 func2 = "8e5f533dbf1092f56ac6c7542ef3bdec4661bd442c9b5e7537fabc7b8c03f5a8"  # 0-700
 func3 = "762835950e81a11cd04cedcb05275dc111c651625d575077fce49f82170e0986"
-func_name = func2
-lower_bound = 0
-upper_bound = 700
+func_name = func1
+lower_bound = 300
+upper_bound = 1350
 feature = 10
 request_per_minutes = {}
 # 获取特定函数调用的跟踪数据
@@ -158,7 +158,7 @@ for i in range(train_size, len(data_X) + lower_bound):
     long_model = long_model.eval().to(device)
     short_model = long_model.eval().to(device)
     # 格式转换
-    single_prediction_input = data_X[i - lower_bound]  
+    single_prediction_input = data_X[i - lower_bound]
     single_prediction_input = single_prediction_input.reshape(-1, 1, feature)
     single_prediction_input = torch.from_numpy(single_prediction_input)
     var_single_prediction_input = Variable(single_prediction_input).to(device)
@@ -178,7 +178,7 @@ for i in range(train_size, len(data_X) + lower_bound):
         train_y = torch.from_numpy(train_Y).to(device)
         # 重新训练
         long_model.train()
-        train(250)
+        train(500)
 
     # 更新短周期模型
     if (i - train_size) % 5 == 0:
@@ -191,7 +191,7 @@ for i in range(train_size, len(data_X) + lower_bound):
         train_y = torch.from_numpy(train_Y).to(device)
         # 重新训练
         short_model.train()
-        train(100)
+        train(200)
 
 
 '''
